@@ -103,28 +103,9 @@ const JobPage = () => {
 }
 
 const jobLoader = async ({ params }) => {
-  try {
-    const res = await fetch(`/api/jobs/${params.id}`);
-
-    if (!res.ok) {
-      throw new Error(`Failed to fetch job data: ${res.status} ${res.statusText}`);
-    }
-
-    const contentType = res.headers.get("content-type");
-    if (!contentType || !contentType.includes("application/json")) {
-      throw new Error("Invalid JSON response from server");
-    }
-
-    const data = await res.json();
-    
-    // Ensure we return a valid object
-    return data || { error: "No job data available" };
-  } catch (error) {
-    console.error("Error loading job:", error);
-    return { error: error.message }; // Ensure a valid return object
-  }
-};
-
-
+  const res = await fetch(`/api/jobs/${params.id}`)
+  const data = await res.json()
+  return data;
+}
 
 export { JobPage as default, jobLoader}
